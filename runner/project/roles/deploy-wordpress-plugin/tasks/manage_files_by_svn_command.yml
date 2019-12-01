@@ -1,0 +1,15 @@
+---
+- name: Init list
+  set_fact:
+    list_path: []
+
+- name: Split each lines by space
+  set_fact:
+    list_path: '{{ list_path + [item.split(" ") | last] }}'
+  loop: '{{ list_svn_status }}'
+
+- name: Execute SVN command
+  command: svn {{ svn_command }} {{ list_path | join(' ') }}
+  args:
+    chdir: /root/workdir/my-local-dir
+  when: list_path | length > 0

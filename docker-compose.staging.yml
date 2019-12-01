@@ -1,0 +1,22 @@
+---
+version: '3.4'
+services:
+  operator:
+    command:
+      - ansible-runner
+      - run
+      - -vvv
+      - /runner
+    depends_on:
+      - svn
+    environment:
+      SVN_REPOSITORY_URL: svn://svn/project-in-svn
+
+  svn:
+    container_name: svn
+    environment:
+      USER_1_NAME: ${SVN_USER_NAME:?err}
+      USER_1_PASS: ${SVN_USER_PASSWORD:?err}
+    image: futureys/svn-repository
+    ports:
+      - 3690:3690

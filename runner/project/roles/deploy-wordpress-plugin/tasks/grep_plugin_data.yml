@@ -1,0 +1,13 @@
+---
+# grep regex: WordPress wp-includes/functions.php get_file_data()
+#             @see https://github.com/WordPress/WordPress/blob/50dc0ca5bb332c895f0f39fe4e6ee1e4a43e06dc/wp-includes/functions.php#L5729
+# cut       : @see https://unix.stackexchange.com/a/177824
+# sed       : @see https://stackoverflow.com/a/3232433
+- name: Grep plugin data
+  shell: >
+    cat {{ path_to_file }}
+    | grep '{{ regex }}'
+    | cut -f 2 -d ':'
+    | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
+  register: result_grep
+  ignore_errors: '{{ arrow_no_lines is defined and arrow_no_lines }}'

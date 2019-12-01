@@ -1,0 +1,73 @@
+---
+- name: Clone git repository
+  git:
+    repo: '{{ git_repository_url }}'
+    dest: /root/workdir/git-working-dir
+    version: '{{ deploy_version }}'
+
+- name: Validate deploy version by Git
+  include_tasks: validate_deploy_version_by_git.yml
+
+- name: Grep stable tag
+  include_tasks: grep_plugin_data.yml
+  vars:
+    path_to_file: /root/workdir/git-working-dir/readme.txt
+    regex: '[ \t\/*#@]*Stable\stag:.*$'
+    arrow_no_lines: yes
+
+- name: Define stable tag
+  set_fact:
+    stable_tag: '{{ result_grep.stdout if (result_grep.stdout_lines | length) == 1 else trunk }}'
+
+- name: Checkout svn repository
+  subversion:
+    repo: '{{ svn_repository_url }}'
+    dest: /root/workdir/my-local-dir
+    force: yes
+
+- name: Validate deploy version by SVN
+  include_tasks: validate_deploy_version_by_svn.yml
+
+- name: Validate stable tag
+  include_tasks: validate_stable_tag.yml
+  when: stable_tag != 'trunk'
+
+# @see https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#notes
+- name: Set .rsync-filter
+  template:
+    src: .rsync-filter.j2
+    dest: /root/workdir/git-working-dir/.rsync-filter
+
+# Synchronize module is only for from local to remote.
+# @see https://docs.ansible.com/ansible/latest/modules/synchronize_module.html
+# -FF option is for using .rsync-filter
+# --delete option is for remove no longer exist file in git working directory.
+# @see https://download.samba.org/pub/rsync/rsync.html
+- name: Rsync from git to svn
+  command: >
+    rsync --archive -FF --delete --verbose --progress /root/workdir/git-working-dir/ /root/workdir/my-local-dir/trunk
+
+- name: SVN add
+  include_tasks: list_up_files.yml
+  vars:
+    first_column: '?'
+    svn_command: 'add'
+
+- name: SVN delete
+  include_tasks: list_up_files.yml
+  vars:
+    first_column: '!'
+    svn_command: 'delete'
+
+- name: Copy into tags
+  command: svn cp trunk tags/{{ deploy_version }}
+  args:
+    chdir: /root/workdir/my-local-dir
+  when: deploy_version == stable_tag
+
+- name: Commit into SVN
+  expect:
+    command: svn commit --username {{ svn_user_name }} --no-auth-cache -m 'Deploy version {{ deploy_version }}'
+    chdir: /root/workdir/my-local-dir
+    responses:
+      Password for \'*\': '{{ svn_user_password }}'

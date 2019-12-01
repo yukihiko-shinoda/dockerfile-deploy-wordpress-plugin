@@ -1,0 +1,15 @@
+---
+- name: Check SVN tags stable tag status
+  stat:
+    path: /root/workdir/my-local-dir/tags/{{ stable_tag }}
+  register: svn_tags_stable_tag
+
+- name: Ensure that deploy version does not exist when deploy version will be stable tag
+  fail:
+    msg: Deploy version ({{ deploy_version }}) already exists on WordPress.org SVN!
+  when: deploy_version == stable_tag and svn_tags_stable_tag.stat.exists
+
+- name: Ensure that stable tag exists when deploy version will not be stable tag
+  fail:
+    msg: Stable tag ({{ stable_tag }}) doesn't exist on WordPress.org SVN!
+  when: deploy_version != stable_tag and not svn_tags_stable_tag.stat.exists

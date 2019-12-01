@@ -1,0 +1,25 @@
+---
+- name: Get path to plugin main PHP file on SVN
+  include_tasks: grep_plugin_main_php.yml
+  vars:
+    target_directory: my-local-dir/trunk
+    version_control_system: Subversion
+    arrow_no_lines: yes
+
+- name: Grep latest version
+  include_tasks: grep_plugin_data.yml
+  vars:
+    path_to_file: /root/workdir/{{ result_grep.stdout_lines[0] }}
+    regex: '[ \t\/*#@]*Stable\stag:.*$'
+  when: (result_grep.stdout_lines | length) == 1
+
+- name: Define latest version
+  set_fact:
+    latest_version: '{{ result_grep.stdout if (result_grep.stdout_lines | length) == 1 else "0.0.0" }}'
+
+- name: Ensure that deploy version is same as latest version or more
+  fail:
+    msg: >
+      Version of plugin main PHP on Git ({{ deploy_version }})
+      should be same as the one on SVN ({{ latest_version }}) or more!
+  when: deploy_version is version(latest_version, '<')

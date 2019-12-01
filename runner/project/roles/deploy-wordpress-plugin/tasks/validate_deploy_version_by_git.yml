@@ -1,0 +1,19 @@
+---
+- name: Get path to plugin main PHP file on Git
+  include_tasks: grep_plugin_main_php.yml
+  vars:
+    target_directory: git-working-dir
+    version_control_system: Git
+
+- name: Grep deploy version
+  include_tasks: grep_plugin_data.yml
+  vars:
+    path_to_file: /root/workdir/{{ result_grep.stdout_lines[0] }}
+    regex: '[ \t\/*#@]*Version:.*$'
+
+- name: Ensure that version in plugin main PHP file is as same as deploy version
+  fail:
+    msg: >
+      Version of plugin main PHP on Git ({{ result_grep.stdout }})
+      should be same as the deploy version ({{ deploy_version }})!
+  when: deploy_version != result_grep.stdout

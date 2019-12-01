@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+# To execute deploy task
+ansible = "*"
+# To call Ansible by Python
+ansible-runner = "*"
+
+[dev-packages]
+flake8 = "*"
+mypy = "*"
+pylint = "*"
+pytest = "*"
+pytest-cov = "*"
+radon = "*"
+twine = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+# &&: @see https://github.com/pypa/pipenv/issues/2160#issue-321228936
+test = "bash -c 'cd tests && pytest -s'"
+flake8 = "flake8 --max-line-length=120 --statistics --show-source --radon-show-closures ."
+cc = "radon cc --show-complexity --min B ."
+mi = "radon mi --show ."

@@ -1,0 +1,6 @@
+#!/bin/bash
+# @see https://docs.docker.com/docker-hub/builds/advanced/#build-hook-examples
+# @see https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
+# @see https://github.com/docker/hub-feedback/issues/1457#issuecomment-415030262
+# @see https://stackoverflow.com/questions/34789149/bash-control-statement-double-forward-slash
+bash -c "docker build -f ${DOCKERFILE_PATH} -t ${DOCKER_REPO}:${DOCKER_TAG//,/ -t ${DOCKER_REPO}:} --target production ."

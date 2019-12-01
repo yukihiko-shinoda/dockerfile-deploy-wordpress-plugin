@@ -1,0 +1,14 @@
+---
+# @aee http://svnbook.red-bean.com/en/1.8/svn.ref.svn.c.status.html
+- name: Check SVN status
+  shell: svn status | grep ^{{ first_column }}
+  args:
+    chdir: /root/workdir/my-local-dir
+  register: svn_status
+  ignore_errors: yes
+
+- name: Manage files by SVN command
+  include_tasks: manage_files_by_svn_command.yml
+  vars:
+    list_svn_status: '{{ svn_status.stdout_lines }}'
+  when: svn_status.rc == 0

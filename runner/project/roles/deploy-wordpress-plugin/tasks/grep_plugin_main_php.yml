@@ -1,0 +1,14 @@
+---
+# This algorithm is based on WordPress wp-plugin/includes/plugin.php get_plugins() .
+# @see https://github.com/WordPress/WordPress/blob/50dc0ca5bb332c895f0f39fe4e6ee1e4a43e06dc/wp-admin/includes/plugin.php#L278
+- name: Get path to plugin main PHP file
+  command: grep --recursive --include="*.php" --files-with-matches '^[ \t\/*#@]*Plugin\sName:.*$' {{ target_directory }}
+  args:
+    chdir: /root/workdir
+  register: result_grep
+  ignore_errors: '{{ arrow_no_lines is defined and arrow_no_lines }}'
+
+- name: Ensure that main PHP file is only one
+  fail:
+    msg: The revision on {{ version_control_system }} includes multiple main PHP files!
+  when: (result_grep.stdout_lines | length) >= 2
