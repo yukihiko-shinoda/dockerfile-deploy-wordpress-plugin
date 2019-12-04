@@ -1,3 +1,7 @@
+![](https://img.shields.io/docker/cloud/automated/futureys/deploy-wordpress-plugin.svg)
+![](https://img.shields.io/docker/cloud/build/futureys/deploy-wordpress-plugin.svg)
+![](https://images.microbadger.com/badges/image/futureys/deploy-wordpress-plugin.svg)
+
 # Quick reference
 
 - **operating procedure**:
@@ -27,6 +31,10 @@ from public Git repository to SubVersion on WordPress.org.
   (Even if Git repository includes assets, this project will deploy
    the revision content as it is under trunk and tags
    of SubVersion repository on WordPress.org.)
+
+## excluding strategy
+
+When rsync, rsync will read [.rsync-filter file](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/blob/master/runner/project/roles/deploy-wordpress-plugin/templates/.rsync-filter.j2).
 
 # How to use this image
 
@@ -147,3 +155,8 @@ User password of SubVersion on WordPress.org.
 The tag name of revision on source Git repository to deploy.
 This string also has to be the same as the version number of
 plugin’s main PHP file on tagged revision of source Git repository.
+
+### ```SHOW_ALL_LOG```
+
+By default, this image hide logs about steps using secret for example when commit.
+When debug, you can check log by setting this ```true```.
