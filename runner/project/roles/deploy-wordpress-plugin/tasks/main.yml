@@ -71,3 +71,4 @@
     chdir: /root/workdir/my-local-dir
     responses:
       Password for \'*\': '{{ svn_user_password }}'
+  no_log: '{{ not show_all_log }}'
