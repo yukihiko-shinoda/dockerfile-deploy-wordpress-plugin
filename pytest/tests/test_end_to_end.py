@@ -2,7 +2,6 @@
 import os
 
 import ansible_runner
-import pytest
 
 
 class TestEndToEnd:

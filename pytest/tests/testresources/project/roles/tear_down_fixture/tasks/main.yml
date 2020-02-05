@@ -2,6 +2,5 @@
 - name: Initialize SubVersion repository
   command: sh -cl init-svn-repository
 
-# @see https://unfuddle.com/stack/docs/help/svnrdump/
-- name: Restore SubVersion repository
-  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' {{ svn_repository_url }} < /tmp/repo.dmp
+- name: Load fixture SubVersion repository
+  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' {{ svn_repository_url }} < /tmp/repository_backup.dmp

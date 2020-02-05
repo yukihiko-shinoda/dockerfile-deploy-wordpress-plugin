@@ -1,0 +1,62 @@
+SVN-fs-dump-format-version: 3
+
+UUID: 681ce26a-dd40-4216-965d-83809ba34890
+
+Revision-number: 0
+Prop-content-length: 56
+Content-length: 56
+
+K 8
+svn:date
+V 27
+2019-11-24T05:28:41.836136Z
+PROPS-END
+
+Revision-number: 1
+Prop-content-length: 133
+Content-length: 133
+
+K 10
+svn:author
+V 5
+harry
+K 8
+svn:date
+V 27
+2019-11-24T19:06:27.660031Z
+K 7
+svn:log
+V 33
+ Create basic directory structure
+PROPS-END
+
+Node-path: branches
+Node-kind: dir
+Node-action: add
+Prop-delta: true
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
+Node-path: tags
+Node-kind: dir
+Node-action: add
+Prop-delta: true
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
+Node-path: trunk
+Node-kind: dir
+Node-action: add
+Prop-delta: true
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
