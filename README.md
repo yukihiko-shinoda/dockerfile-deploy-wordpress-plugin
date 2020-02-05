@@ -11,6 +11,7 @@
 - **Reference materials**:
 
   [Plugin Readmes | Plugin Developer Handbook | WordPress Developer Resources](https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/#how-the-readme-is-parsed)
+
   [The Plugins directory and readme.txt files – Make WordPress Plugins](https://make.wordpress.org/plugins/2012/06/09/the-plugins-directory-and-readme-txt-files/)
 
 # What is Deploy WordPress Plugin?

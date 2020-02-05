@@ -17,6 +17,7 @@ pytest = "*"
 pytest-cov = "*"
 radon = "*"
 twine = "*"
+rope = "*"
 
 [requires]
 python_version = "3.6"

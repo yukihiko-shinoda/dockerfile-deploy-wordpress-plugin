@@ -25,11 +25,16 @@ services:
     container_name: workspace
     environment:
       SSH_PASSWORD: p@ssW0rd1
-    image: futureys/ansible-workspace-deploy-wordpress-plugin:20191127164500
+      SVN_USER_NAME: svn_user_name
+      SVN_USER_PASS: p@ssW0rd2
+    image: futureys/ansible-workspace-deploy-wordpress-plugin:20200205110500
+    volumes:
+      - svn-repository:/var/opt/svn
 
   svn:
     container_name: svn
-    environment:
-      USER_1_NAME: svn_user_name
-      USER_1_PASS: p@ssW0rd2
-    image: futureys/svn-repository
+    image: garethflowers/svn-server
+    volumes:
+      - svn-repository:/var/opt/svn
+volumes:
+  svn-repository:

@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - name: set_up_fixture

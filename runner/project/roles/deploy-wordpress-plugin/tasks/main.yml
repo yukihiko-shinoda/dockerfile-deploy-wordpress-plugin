@@ -47,6 +47,12 @@
   command: >
     rsync --archive -FF --delete --verbose --progress /root/workdir/git-working-dir/ /root/workdir/my-local-dir/trunk
 
+- name: Ensure that tags directory exists
+  file:
+    path: /root/workdir/my-local-dir/tags
+    state: directory
+  when: deploy_version == stable_tag
+  
 - name: SVN add
   include_tasks: list_up_files.yml
   vars:

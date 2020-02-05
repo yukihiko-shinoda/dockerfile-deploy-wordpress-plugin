@@ -23,4 +23,4 @@ services:
     container_name: workspace
     environment:
       SSH_PASSWORD: p@ssW0rd
-    image: futureys/ansible-workspace-deploy-wordpress-plugin:20191127164500
+    image: futureys/ansible-workspace-deploy-wordpress-plugin:20200205110500
