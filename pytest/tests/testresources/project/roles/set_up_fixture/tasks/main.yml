@@ -1,0 +1,24 @@
+---
+- name: Dump SubVersion repository for backup to restore when teardown
+  shell: svnrdump dump {{ svn_repository_url }} > /tmp/repository_backup.dmp
+
+- name: Initialize SubVersion repository
+  shell: sh -cl init-svn-repository
+
+- name: Copy repository fixture dump file
+  copy:
+    src: repository_fixture.dmp
+    dest: /tmp/repository_fixture.dmp
+
+- name: Load fixture SubVersion repository
+  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' {{ svn_repository_url }} < /tmp/repository_fixture.dmp
+
+- name: Clean up local SubVersion directory
+  file:
+    path: /root/workdir/my-local-dir
+    state: absent
+
+- name: Clean up test SubVersion directory
+  file:
+    path: /root/workdir/project-in-svn
+    state: absent

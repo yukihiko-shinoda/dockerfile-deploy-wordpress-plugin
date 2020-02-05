@@ -13,16 +13,26 @@ services:
     tty: true
     volumes:
       - ./pytest:/root/pytest
+      # Because /runner is home directory,
+      # to escape some trouble, mount each directories individually
       - ./runner/env:/runner/env
       - ./runner/inventory:/runner/inventory
       - ./runner/project:/runner/project
     working_dir: /root/pytest
 
+  workspace:
+    environment:
+      SVN_USER_NAME: ${SVN_USER_NAME:?err}
+      SVN_USER_PASS: ${SVN_USER_PASSWORD:?err}
+    volumes:
+      - svn-repository:/var/opt/svn
+
   svn:
     container_name: svn
-    environment:
-      USER_1_NAME: ${SVN_USER_NAME:?err}
-      USER_1_PASS: ${SVN_USER_PASSWORD:?err}
-    image: futureys/svn-repository
+    image: garethflowers/svn-server
     ports:
       - 3690:3690
+    volumes:
+      - svn-repository:/var/opt/svn
+volumes:
+  svn-repository:

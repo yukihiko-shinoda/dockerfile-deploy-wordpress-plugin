@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - name: tear_down_fixture

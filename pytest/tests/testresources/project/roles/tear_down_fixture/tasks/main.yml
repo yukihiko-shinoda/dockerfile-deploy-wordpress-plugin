@@ -1,0 +1,6 @@
+---
+- name: Initialize SubVersion repository
+  command: sh -cl init-svn-repository
+
+- name: Load fixture SubVersion repository
+  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' {{ svn_repository_url }} < /tmp/repository_backup.dmp
