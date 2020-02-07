@@ -18,6 +18,7 @@ pytest-cov = "*"
 radon = "*"
 twine = "*"
 rope = "*"
+testinfra = "*"
 
 [requires]
 python_version = "3.6"

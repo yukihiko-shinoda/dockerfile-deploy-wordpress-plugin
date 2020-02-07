@@ -1,3 +1,4 @@
 ---
 ansible_ssh_user: '{{ lookup("env","ANSIBLE_SSH_USER") }}'
+ansible_ssh_pass: '{{ lookup("env","ANSIBLE_SSH_PASS") }}'
 ansible_python_interpreter: '{{ lookup("env","ANSIBLE_PYTHON_INTERPRETER") }}'

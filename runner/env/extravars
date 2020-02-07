@@ -1,5 +1,4 @@
 ---
-ansible_ssh_pass: '{{ lookup("env","ANSIBLE_SSH_PASS") }}'
 git_repository_url: '{{ lookup("env","GIT_REPOSITORY_URL") }}'
 svn_repository_url: '{{ lookup("env","SVN_REPOSITORY_URL") }}'
 svn_user_name: '{{ lookup("env","SVN_USER_NAME") }}'

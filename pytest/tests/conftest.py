@@ -28,11 +28,6 @@ def playbook_tear_down_fixture():
     yield from playbook('playbook_tear_down_fixture.yml', 'tear_down_fixture')
 
 
-@pytest.fixture
-def playbook_test():
-    yield from playbook('playbook_test.yml', 'test')
-
-
 def playbook(playbook, role):
     path_ansible_home = Path('/runner/project')
     path_ansible_test_resource = Path(__file__).parent / 'testresources/project'
