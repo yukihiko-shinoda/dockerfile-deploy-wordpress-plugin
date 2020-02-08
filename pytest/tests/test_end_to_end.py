@@ -2,36 +2,31 @@
 import os
 
 import ansible_runner
-import testinfra
-
-from tests.testlibraries.workspace import Workspace
 
 
 class TestEndToEnd:
-    def test(self, subversion_dump):
+    def test(self, subversion_dump, workspace):
         self.run_production('0.4.1')
         self.run_production('0.4.2')
         self.run_production('0.4.5')
 
-        host = Workspace(testinfra.get_host('ansible://all', ansible_inventory='/runner/inventory'))
-        host.checkout_svn(4)
-        assert host.file_exists('/root/workdir/project-in-svn/tags/0.4.5/images/options32.png')
-        host.checkout_svn(3)
-        assert not host.file_exists('/root/workdir/project-in-svn/trunk/includes/class-admin-menu.php')
-        assert host.file_exists('/root/workdir/project-in-svn/trunk/images/staticpress.png')
-        assert host.check_line_in_file(
+        workspace.checkout_svn(4)
+        assert workspace.file_exists('/root/workdir/project-in-svn/tags/0.4.5/images/options32.png')
+        workspace.checkout_svn(3)
+        assert not workspace.file_exists('/root/workdir/project-in-svn/trunk/includes/class-admin-menu.php')
+        assert workspace.file_exists('/root/workdir/project-in-svn/trunk/images/staticpress.png')
+        assert workspace.check_line_in_file(
             '/root/workdir/project-in-svn/trunk/includes/class-InputValidator.php',
             "require_once(dirname(__FILE__).'/class-WP_Function_Wrapper.php');"
         )
-        assert not host.file_exists('/root/workdir/project-in-svn/tags/0.4.2/images/options32.png')
-        host.checkout_svn(2)
-        assert host.file_exists('/root/workdir/project-in-svn/trunk/includes/class-admin-menu.php')
-        assert not host.check_line_in_file(
+        assert not workspace.file_exists('/root/workdir/project-in-svn/tags/0.4.2/images/options32.png')
+        workspace.checkout_svn(2)
+        assert workspace.file_exists('/root/workdir/project-in-svn/trunk/includes/class-admin-menu.php')
+        assert not workspace.check_line_in_file(
             '/root/workdir/project-in-svn/trunk/includes/class-InputValidator.php',
             "require_once(dirname(__FILE__).'/class-WP_Function_Wrapper.php');"
         )
-        assert host.file_exists('/root/workdir/project-in-svn/tags/0.4.1/images/options32.png')
-
+        assert workspace.file_exists('/root/workdir/project-in-svn/tags/0.4.1/images/options32.png')
 
     @staticmethod
     def run_production(deploy_version):

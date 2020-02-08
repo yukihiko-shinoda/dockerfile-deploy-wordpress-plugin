@@ -5,6 +5,7 @@ class Workspace:
     def __init__(self, host):
         self.host = host
         self.svn_repository_url = os.environ['SVN_REPOSITORY_URL']
+        self.staged_file = None
 
     def checkout_svn(self, revision):
         result = self.host.ansible(
@@ -37,3 +38,16 @@ class Workspace:
         )
         print(result)
         return result['changed']
+
+    def stage_file(self, src, dest):
+        result = self.host.ansible(
+            'copy',
+            ' '.join([
+                f'src={src}',
+                f'dest={dest}',
+            ]),
+            check=False
+        )
+        print(result)
+        assert 'changed' in result, result['msg']
+        self.staged_file = dest
