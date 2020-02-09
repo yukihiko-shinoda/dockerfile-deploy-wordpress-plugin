@@ -7,7 +7,12 @@ import ansible_runner
 class TestEndToEnd:
     def test(self, subversion_dump, workspace):
         self.run_production('0.4.1')
+        # @see https://help.github.com/en/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners
+        github_workspace = '/github/workspace'
+        os.environ['GITHUB_WORKSPACE'] = github_workspace
+        workspace.checkout_git('0.4.2', path=github_workspace)
         self.run_production('0.4.2')
+        del os.environ['GITHUB_WORKSPACE']
         self.run_production('0.4.5')
 
         workspace.checkout_svn(4, path='/root/workdir/project-in-svn')

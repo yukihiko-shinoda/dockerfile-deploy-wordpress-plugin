@@ -3,7 +3,7 @@
 - name: Set .rsync-filter
   template:
     src: .rsync-filter.j2
-    dest: '{{ workspace }}{{ directory_name_checkout_git }}/.rsync-filter'
+    dest: '{{ path_checkout_git }}/.rsync-filter'
     force: no
 
 # Synchronize module is only for from local to remote.
@@ -13,4 +13,4 @@
 # @see https://download.samba.org/pub/rsync/rsync.html
 - name: Rsync from git to svn
   command: >
-    rsync --archive -FF --delete --verbose --progress {{ workspace }}{{ directory_name_checkout_git }}/ {{ workspace }}{{ directory_name_checkout_subversion }}/trunk
+    rsync --archive -FF --delete --verbose --progress {{ path_checkout_git }}/ {{ workspace }}{{ directory_name_checkout_subversion }}/trunk

@@ -11,12 +11,14 @@ class Workspace:
         self.svn_repository_url = os.environ['SVN_REPOSITORY_URL']
         self.staged_file = None
 
-    def checkout_git(self, version):
+    def checkout_git(self, version, *, path=None):
+        if path is None:
+            path = self.PATH_GIT_CHECKOUT
         result = self.host.ansible(
             'git',
             ' '.join([
                 f'repo={self.git_repository_url}',
-                f'dest={self.PATH_GIT_CHECKOUT}',
+                f'dest={path}',
                 f'version={version}',
             ]),
             check=False

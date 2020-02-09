@@ -1,9 +1,33 @@
 ---
+# @see https://help.github.com/en/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners
+- name: Define GitHub workspace
+  set_fact:
+    github_workspace: '{{ lookup("env", "GITHUB_WORKSPACE", errors="ignore") }}'
+
+- name: Define is GitHub Actions
+  set_fact:
+    is_github_actions: '{{ github_workspace != "" }}'
+
+- name: Check if GitHub workspace is defined and repository is checked out
+  stat:
+    path: '{{ github_workspace }}/.git'
+  register: github_workspace_repository
+  when: is_github_actions
+
+- name: Define has checked out by GitHub Actions
+  set_fact:
+    has_checked_out_by_github_actions: '{{ is_github_actions and github_workspace_repository.stat.isdir }}'
+
+- name: Define path Git checkout
+  set_fact:
+    path_checkout_git: '{{ github_workspace if has_checked_out_by_github_actions else workspace + directory_name_checkout_git }}'
+
 - name: Clone git repository
   git:
     repo: '{{ git_repository_url }}'
-    dest: '{{ workspace }}{{ directory_name_checkout_git }}'
+    dest: '{{ path_checkout_git }}'
     version: '{{ deploy_version }}'
+  when: not has_checked_out_by_github_actions
 
 - name: Validate deploy version by Git
   include_tasks: validate_deploy_version_by_git.yml
@@ -11,7 +35,7 @@
 - name: Grep stable tag
   include_tasks: grep_plugin_data.yml
   vars:
-    path_to_file: '{{ workspace }}{{ directory_name_checkout_git }}/readme.txt'
+    path_to_file: '{{ path_checkout_git }}/readme.txt'
     regex: '[ \t\/*#@]*Stable\stag:.*$'
     arrow_no_lines: yes
 

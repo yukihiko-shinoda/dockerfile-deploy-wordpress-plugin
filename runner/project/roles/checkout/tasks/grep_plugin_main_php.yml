@@ -3,8 +3,6 @@
 # @see https://github.com/WordPress/WordPress/blob/50dc0ca5bb332c895f0f39fe4e6ee1e4a43e06dc/wp-admin/includes/plugin.php#L278
 - name: Get path to plugin main PHP file
   command: grep --recursive --include="*.php" --files-with-matches '^[ \t\/*#@]*Plugin\sName:.*$' {{ target_directory }}
-  args:
-    chdir: '{{ workspace }}'
   register: result_grep
   ignore_errors: '{{ arrow_no_lines is defined and arrow_no_lines }}'
 
