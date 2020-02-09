@@ -1,6 +1,7 @@
-![](https://img.shields.io/docker/cloud/automated/futureys/deploy-wordpress-plugin.svg)
-![](https://img.shields.io/docker/cloud/build/futureys/deploy-wordpress-plugin.svg)
-![](https://images.microbadger.com/badges/image/futureys/deploy-wordpress-plugin.svg)
+<!-- markdownlint-disable first-line-h1 -->
+[![docker build automated?](https://img.shields.io/docker/cloud/automated/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/builds)
+[![docker build passing?](https://img.shields.io/docker/cloud/build/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/builds)
+[![image size and number of layers](https://images.microbadger.com/badges/image/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/dockerfile)
 
 # Quick reference
 
@@ -14,7 +15,9 @@
 
   [The Plugins directory and readme.txt files – Make WordPress Plugins](https://make.wordpress.org/plugins/2012/06/09/the-plugins-directory-and-readme-txt-files/)
 
+<!-- markdownlint-disable no-trailing-punctuation -->
 # What is Deploy WordPress Plugin?
+<!-- markdownlint-enable no-trailing-punctuation -->
 
 This is deployment job for WordPress Plugin
 from public Git repository to SubVersion on WordPress.org.
@@ -35,7 +38,18 @@ from public Git repository to SubVersion on WordPress.org.
 
 ## excluding strategy
 
-When rsync, rsync will read [.rsync-filter file](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/blob/master/runner/project/roles/deploy-wordpress-plugin/templates/.rsync-filter.j2).
+The process executes rsync from Git working tree to SubVersion working tree with ```.rsync-filter```.
+
+### default behavior
+
+rsync will read [default .rsync-filter file](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/blob/master/runner/project/roles/deploy-wordpress-plugin/templates/.rsync-filter.j2).
+
+### customizing behavior
+
+If ```.rsync-filter``` file is exist on the root of Git working tree, rsync will read it. The most primitive how to write it is to list up files and directories you want to exclude. For more details, following contents will be helpful.
+
+- [linux - Using Rsync filter to include/exclude files - Stack Overflow](https://stackoverflow.com/questions/35364075/using-rsync-filter-to-include-exclude-files)
+- [rsync(1) - Linux man page](https://linux.die.net/man/1/rsync)
 
 # How to use this image
 
@@ -43,7 +57,7 @@ This image is depend on [futureys/ansible-workspace-deploy-wordpress-plugin](htt
 It will be easier to understand
 if you look at the Docker Compose files in the GitHub code.
 
-https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin
+<https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin>
 
 ## ... via docker-compose
 
@@ -72,7 +86,7 @@ docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d && dock
 ```
 
 ### 4. Check dry run result
- 
+
 When process succeed to finish, check result by checking out from mock:
 
 ```shell script
@@ -142,8 +156,8 @@ Ex: ```https://plugins.svn.wordpress.org/????```
 User name of SubVersion on WordPress.org.
 
 > Your account for SVN will be the same username (not the email) of
-> the account you used when you submitted the plugin. 
-> This is the user ID you use for the WordPress forums as well. 
+> the account you used when you submitted the plugin.
+> This is the user ID you use for the WordPress forums as well.
 
 ### ```SVN_USER_PASSWORD```
 
