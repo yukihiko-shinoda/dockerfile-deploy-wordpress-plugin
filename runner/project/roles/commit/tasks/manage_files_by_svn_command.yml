@@ -11,5 +11,5 @@
 - name: Execute SVN command
   command: svn {{ svn_command }} {{ list_path | join(' ') }}
   args:
-    chdir: /root/workdir/my-local-dir
+    chdir: '{{ workspace }}{{ directory_name_checkout_subversion }}'
   when: list_path | length > 0

@@ -1,0 +1,26 @@
+---
+- name: SVN add
+  include_tasks: list_up_files.yml
+  vars:
+    first_column: '?'
+    svn_command: 'add'
+
+- name: SVN delete
+  include_tasks: list_up_files.yml
+  vars:
+    first_column: '!'
+    svn_command: 'delete'
+
+- name: Copy into tags
+  command: svn cp trunk tags/{{ deploy_version }}
+  args:
+    chdir: '{{ workspace }}{{ directory_name_checkout_subversion }}'
+  when: deploy_version == stable_tag
+
+- name: Commit into SVN
+  expect:
+    command: svn commit --username {{ svn_user_name }} --no-auth-cache -m 'Deploy version {{ deploy_version }}'
+    chdir: '{{ workspace }}{{ directory_name_checkout_subversion }}'
+    responses:
+      Password for \'*\': '{{ svn_user_password }}'
+  no_log: '{{ not show_all_log }}'

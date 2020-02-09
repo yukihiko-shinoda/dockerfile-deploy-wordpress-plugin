@@ -1,4 +1,12 @@
 ---
 - hosts: all
   roles:
-    - name: deploy-wordpress-plugin
+    - role: checkout
+      tags:
+        - checkout
+    - role: rsync_git_to_svn
+      tags:
+        - rsync_git_to_svn
+    - role: commit
+      tags:
+        - commit

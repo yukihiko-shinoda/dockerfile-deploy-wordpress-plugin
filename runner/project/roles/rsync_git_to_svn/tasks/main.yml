@@ -1,0 +1,15 @@
+---
+# @see https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#notes
+- name: Set .rsync-filter
+  template:
+    src: .rsync-filter.j2
+    dest: '{{ workspace }}{{ directory_name_checkout_git }}/.rsync-filter'
+
+# Synchronize module is only for from local to remote.
+# @see https://docs.ansible.com/ansible/latest/modules/synchronize_module.html
+# -FF option is for using .rsync-filter
+# --delete option is for remove no longer exist file in git working directory.
+# @see https://download.samba.org/pub/rsync/rsync.html
+- name: Rsync from git to svn
+  command: >
+    rsync --archive -FF --delete --verbose --progress {{ workspace }}{{ directory_name_checkout_git }}/ {{ workspace }}{{ directory_name_checkout_subversion }}/trunk

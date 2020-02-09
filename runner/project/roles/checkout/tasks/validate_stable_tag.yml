@@ -1,7 +1,7 @@
 ---
 - name: Check SVN tags stable tag status
   stat:
-    path: /root/workdir/my-local-dir/tags/{{ stable_tag }}
+    path: '{{ workspace }}{{ directory_name_checkout_subversion }}/tags/{{ stable_tag }}'
   register: svn_tags_stable_tag
 
 - name: Ensure that deploy version does not exist when deploy version will be stable tag

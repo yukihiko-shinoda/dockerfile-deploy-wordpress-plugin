@@ -1,6 +1,8 @@
 import ansible_runner
 import pytest
 
+from tests.testlibraries.event_analyzer import EventAnalyzer
+
 
 class TestTasks:
     @pytest.mark.parametrize('src, dest, regex, arrow_no_lines, expect', [
@@ -14,20 +16,29 @@ class TestTasks:
     ):
         # @see https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/#example-readme
         # @see https://developer.wordpress.org/plugins/plugin-basics/header-requirements/#header-fields
-        runner = ansible_runner.run(
-            private_data_dir='/runner',
-            playbook='playbook_tasks.yml',
-            extravars={
-                'task_file_name': 'roles/deploy-wordpress-plugin/tasks/grep_plugin_data.yml',
+        result_debug = self.run_include_task(
+            'roles/checkout/tasks/grep_plugin_data.yml', 
+            list_debug_variable=['result_grep'],
+            vars={
                 'path_to_file': file_staged_workspace.staged_file,
                 'regex': regex,
                 'arrow_no_lines': arrow_no_lines,
-            },
-            verbosity=0)
+            }
+        )
+        assert result_debug['result_grep']['stdout'] == expect
+
+    def run_include_task(self, task_file_name, *, list_debug_variable=None, vars=None):
+        extra_vars = {'task_file_name': task_file_name}
+        if list_debug_variable is not None:
+            extra_vars['list_debug_variable'] = list_debug_variable
+        if vars is not None:
+            extra_vars.update(vars)
+        runner = ansible_runner.run(
+            private_data_dir='/runner',
+            playbook='playbook_tasks.yml',
+            extravars=extra_vars
+        )
         assert runner.status == 'successful'
         assert runner.rc == 0
-        for event in runner.events:
-            if event['event'] == 'runner_on_ok' and event['event_data']['task_action'] == 'debug':
-                responce = event['event_data']['res']
-                break
-        assert responce['result_grep']['stdout'] == expect
+        responce = EventAnalyzer.get_response(runner.events)
+        return EventAnalyzer.extract_result_debug(responce, list_debug_variable)

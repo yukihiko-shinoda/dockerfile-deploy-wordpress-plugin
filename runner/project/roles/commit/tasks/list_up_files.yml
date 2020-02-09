@@ -3,7 +3,7 @@
 - name: Check SVN status
   shell: svn status | grep ^{{ first_column }}
   args:
-    chdir: /root/workdir/my-local-dir
+    chdir: '{{ workspace }}{{ directory_name_checkout_subversion }}'
   register: svn_status
   ignore_errors: yes
 

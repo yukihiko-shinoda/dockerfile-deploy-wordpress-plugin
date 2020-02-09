@@ -3,5 +3,5 @@
   tasks:
     - include_tasks: '{{ task_file_name }}'
     - debug:
-        var: result_grep
-    
+        var: '{{ item }}'
+      with_items: '{{ list_debug_variable }}'

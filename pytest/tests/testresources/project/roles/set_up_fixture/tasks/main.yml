@@ -15,10 +15,10 @@
 
 - name: Clean up local SubVersion directory
   file:
-    path: /root/workdir/my-local-dir
+    path: '{{ workspace }}{{ directory_name_checkout_subversion }}'
     state: absent
 
 - name: Clean up test SubVersion directory
   file:
-    path: /root/workdir/project-in-svn
+    path: '{{ workspace }}project-in-svn'
     state: absent

@@ -1,0 +1,33 @@
+---
+- name: Clone git repository
+  git:
+    repo: '{{ git_repository_url }}'
+    dest: '{{ workspace }}{{ directory_name_checkout_git }}'
+    version: '{{ deploy_version }}'
+
+- name: Validate deploy version by Git
+  include_tasks: validate_deploy_version_by_git.yml
+
+- name: Grep stable tag
+  include_tasks: grep_plugin_data.yml
+  vars:
+    path_to_file: '{{ workspace }}{{ directory_name_checkout_git }}/readme.txt'
+    regex: '[ \t\/*#@]*Stable\stag:.*$'
+    arrow_no_lines: yes
+
+- name: Define stable tag
+  set_fact:
+    stable_tag: '{{ result_grep.stdout if (result_grep.stdout_lines | length) == 1 else trunk }}'
+
+- name: Checkout svn repository
+  subversion:
+    repo: '{{ svn_repository_url }}'
+    dest: '{{ workspace }}{{ directory_name_checkout_subversion }}'
+    force: yes
+
+- name: Validate deploy version by SVN
+  include_tasks: validate_deploy_version_by_svn.yml
+
+- name: Validate stable tag
+  include_tasks: validate_stable_tag.yml
+  when: stable_tag != 'trunk'

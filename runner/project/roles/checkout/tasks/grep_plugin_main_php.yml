@@ -4,7 +4,7 @@
 - name: Get path to plugin main PHP file
   command: grep --recursive --include="*.php" --files-with-matches '^[ \t\/*#@]*Plugin\sName:.*$' {{ target_directory }}
   args:
-    chdir: /root/workdir
+    chdir: '{{ workspace }}'
   register: result_grep
   ignore_errors: '{{ arrow_no_lines is defined and arrow_no_lines }}'
 

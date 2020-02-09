@@ -2,14 +2,14 @@
 - name: Get path to plugin main PHP file on SVN
   include_tasks: grep_plugin_main_php.yml
   vars:
-    target_directory: my-local-dir/trunk
+    target_directory: '{{ directory_name_checkout_subversion }}/trunk'
     version_control_system: Subversion
     arrow_no_lines: yes
 
 - name: Grep latest version
   include_tasks: grep_plugin_data.yml
   vars:
-    path_to_file: /root/workdir/{{ result_grep.stdout_lines[0] }}
+    path_to_file: '{{ workspace }}{{ result_grep.stdout_lines[0] }}'
     regex: '[ \t\/*#@]*Stable\stag:.*$'
   when: (result_grep.stdout_lines | length) == 1
 

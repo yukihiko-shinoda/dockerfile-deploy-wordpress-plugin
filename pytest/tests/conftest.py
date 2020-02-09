@@ -26,9 +26,19 @@ def clear_artifacts():
 
 
 @pytest.fixture
+def git_svn_checkout_workspace(subversion_dump, workspace):
+    workspace.checkout_git('0.4.5')
+    workspace.checkout_svn('HEAD')
+    yield workspace
+    workspace.remove_directory_svn()
+    workspace.remove_directory_git()
+
+
+@pytest.fixture
 def file_staged_workspace(workspace, src, dest):
     workspace.stage_file(Path(__file__).parent / 'testresources' / src, dest)
     yield workspace
+    workspace.remove_file(dest)
 
 
 @pytest.fixture
@@ -39,11 +49,11 @@ def workspace():
 @pytest.fixture
 def subversion_dump(playbook_set_up_fixture, role_set_up_fixture, playbook_tear_down_fixture, role_tear_down_fixture):
     # @see https://unfuddle.com/stack/docs/help/svnrdump/
-    runner = ansible_runner.run(private_data_dir='/runner', playbook='playbook_set_up_fixture.yml', verbosity=3)
+    runner = ansible_runner.run(private_data_dir='/runner', playbook='playbook_set_up_fixture.yml')
     assert runner.status == 'successful'
     assert runner.rc == 0
     yield
-    runner = ansible_runner.run(private_data_dir='/runner', playbook='playbook_tear_down_fixture.yml', verbosity=3)
+    runner = ansible_runner.run(private_data_dir='/runner', playbook='playbook_tear_down_fixture.yml')
     assert runner.status == 'successful'
     assert runner.rc == 0
 
