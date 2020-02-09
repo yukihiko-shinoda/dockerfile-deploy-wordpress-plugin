@@ -4,6 +4,7 @@
   template:
     src: .rsync-filter.j2
     dest: '{{ workspace }}{{ directory_name_checkout_git }}/.rsync-filter'
+    force: no
 
 # Synchronize module is only for from local to remote.
 # @see https://docs.ansible.com/ansible/latest/modules/synchronize_module.html

@@ -26,8 +26,17 @@ def clear_artifacts():
 
 
 @pytest.fixture
+def git_svn_checkout_rsync_filter_staged_workspace(git_svn_checkout_workspace):
+    git_svn_checkout_workspace.stage_file(
+        Path(__file__).parent / 'testresources/.rsync-filter', '/root/workdir/git-working-dir/'
+    )
+    yield git_svn_checkout_workspace
+    git_svn_checkout_workspace.remove_file('/root/workdir/git-working-dir/')
+
+
+@pytest.fixture
 def git_svn_checkout_workspace(subversion_dump, workspace):
-    workspace.checkout_git('0.4.5')
+    workspace.checkout_git('0.4.8')
     workspace.checkout_svn('HEAD')
     yield workspace
     workspace.remove_directory_svn()
