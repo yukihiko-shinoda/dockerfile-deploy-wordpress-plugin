@@ -11,11 +11,8 @@ services:
       - svn
     environment:
       SVN_REPOSITORY_URL: svn://svn/project-in-svn
-
-  workspace:
-    environment:
       SVN_USER_NAME: ${SVN_USER_NAME:?err}
-      SVN_USER_PASS: ${SVN_USER_PASSWORD:?err}
+      SVN_USER_PASSWORD: ${SVN_USER_PASSWORD:?err}
     volumes:
       - svn-repository:/var/opt/svn
 

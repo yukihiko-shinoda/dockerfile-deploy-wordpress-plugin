@@ -1,5 +1,6 @@
 ---
 all:
   hosts:
-   workspace:
-     ansible_host: '{{ lookup("env","ANSIBLE_SSH_HOST") }}'
+    workspace:
+      ansible_host: localhost
+      ansible_connection: local

@@ -6,29 +6,13 @@ services:
       context: .
     depends_on:
       - svn
-      - workspace
     environment:
-      ANSIBLE_SSH_HOST: workspace
-      ANSIBLE_SSH_USER: root
-      ANSIBLE_SSH_PASS: p@ssW0rd1
-      # ↓ Specification of Python on Alpine official container
-      # ↓ @see https://hub.docker.com/_/python
-      ANSIBLE_PYTHON_INTERPRETER: /usr/local/bin/python
       GIT_REPOSITORY_URL: https://github.com/yukihiko-shinoda/staticpress.git
       SVN_REPOSITORY_URL: svn://svn/project-in-svn
       SVN_USER_NAME: svn_user_name
-      SVN_USER_PASSWORD: p@ssW0rd2
+      SVN_USER_PASSWORD: p@ssW0rd
     volumes:
       - ./pytest:/root/pytest
-
-  workspace:
-    container_name: workspace
-    environment:
-      SSH_PASSWORD: p@ssW0rd1
-      SVN_USER_NAME: svn_user_name
-      SVN_USER_PASS: p@ssW0rd2
-    image: futureys/ansible-workspace-deploy-wordpress-plugin:20200205110500
-    volumes:
       - svn-repository:/var/opt/svn
 
   svn:

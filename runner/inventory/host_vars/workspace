@@ -1,7 +1,5 @@
 ---
-ansible_ssh_user: '{{ lookup("env","ANSIBLE_SSH_USER") }}'
-ansible_ssh_pass: '{{ lookup("env","ANSIBLE_SSH_PASS") }}'
-ansible_python_interpreter: '{{ lookup("env","ANSIBLE_PYTHON_INTERPRETER") }}'
+ansible_python_interpreter: 'python3'
 workspace: '/root/workdir/'
 directory_name_checkout_subversion: 'my-local-dir'
 directory_name_checkout_git: 'git-working-dir'

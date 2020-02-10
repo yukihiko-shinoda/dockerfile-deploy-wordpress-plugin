@@ -11,7 +11,7 @@
     dest: /tmp/repository_fixture.dmp
 
 - name: Load fixture SubVersion repository
-  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' {{ svn_repository_url }} < /tmp/repository_fixture.dmp
+  shell: svnrdump load --username {{ svn_user_name }} --password '{{ svn_user_password }}' --no-auth-cache {{ svn_repository_url }} < /tmp/repository_fixture.dmp
 
 - name: Clean up local SubVersion directory
   file:

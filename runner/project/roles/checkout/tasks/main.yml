@@ -18,6 +18,11 @@
   set_fact:
     has_checked_out_by_github_actions: '{{ is_github_actions and github_workspace_repository.stat.isdir }}'
 
+- name: Assert that Repository checked out
+  fail:
+    msg: Git repository hasn't checked out. Use checkout action at first.
+  when: is_github_actions and not github_workspace_repository.stat.isdir
+
 - name: Define path Git checkout
   set_fact:
     path_checkout_git: '{{ github_workspace if has_checked_out_by_github_actions else workspace + directory_name_checkout_git }}'

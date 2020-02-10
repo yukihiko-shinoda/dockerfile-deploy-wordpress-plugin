@@ -125,22 +125,6 @@ docker-compose -f docker-compose.yml down
 
 ## Environment Variables
 
-### ```ANSIBLE_SSH_HOST```
-
-Host name to ssh connect by Ansible.
-
-### ```ANSIBLE_SSH_USER```
-
-Host name to ssh user name by Ansible.
-
-### ```ANSIBLE_SSH_PASS```
-
-Host name to ssh user password by Ansible.
-
-### ```ANSIBLE_PYTHON_INTERPRETER```
-
-Path to Python interpreter on **host side** which Ansible use.
-
 ### ```GIT_REPOSITORY_URL```
 
 The source Git repository URL.

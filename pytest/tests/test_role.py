@@ -43,7 +43,8 @@ class TestRole:
         runner = ansible_runner.run(
             private_data_dir='/runner',
             playbook='playbook.yml',
-            tags='rsync_git_to_svn'
+            tags='rsync_git_to_svn',
+            extravars={'path_checkout_git': '/root/workdir/git-working-dir'}
         )
         assert runner.status == 'successful'
         assert runner.rc == 0

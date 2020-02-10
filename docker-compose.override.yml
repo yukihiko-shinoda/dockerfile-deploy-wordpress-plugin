@@ -9,6 +9,8 @@ services:
     environment:
       HOME: /root
       SVN_REPOSITORY_URL: svn://svn/project-in-svn
+      SVN_USER_NAME: ${SVN_USER_NAME:?err}
+      SVN_USER_PASSWORD: ${SVN_USER_PASSWORD:?err}
     image: futureys/ansible-runner-python3:20191127153000
     tty: true
     volumes:
@@ -18,14 +20,8 @@ services:
       - ./runner/env:/runner/env
       - ./runner/inventory:/runner/inventory
       - ./runner/project:/runner/project
-    working_dir: /root/pytest
-
-  workspace:
-    environment:
-      SVN_USER_NAME: ${SVN_USER_NAME:?err}
-      SVN_USER_PASS: ${SVN_USER_PASSWORD:?err}
-    volumes:
       - svn-repository:/var/opt/svn
+    working_dir: /root/pytest
 
   svn:
     container_name: svn
