@@ -5,6 +5,7 @@ services:
     container_name: operator
     environment:
       GIT_REPOSITORY_URL: ${GIT_REPOSITORY_URL}
+      GIT_PATH_CHECKED_OUT: ${GIT_PATH_CHECKED_OUT}
       SVN_REPOSITORY_URL: ${SVN_REPOSITORY_URL}
       SVN_USER_NAME: ${SVN_USER_NAME}
       SVN_USER_PASSWORD: ${SVN_USER_PASSWORD}

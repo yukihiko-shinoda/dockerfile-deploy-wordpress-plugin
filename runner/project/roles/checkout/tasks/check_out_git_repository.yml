@@ -1,0 +1,10 @@
+---
+- name: Clone git repository
+  git:
+    repo: '{{ git_repository_url }}'
+    dest: '{{ workspace }}{{ directory_name_checkout_git }}'
+    version: '{{ deploy_version }}'
+
+- name: Define path Git checkout
+  set_fact:
+    path_checkout_git: '{{ workspace }}{{ directory_name_checkout_git }}'

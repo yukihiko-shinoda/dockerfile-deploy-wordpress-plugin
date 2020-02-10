@@ -24,7 +24,6 @@ from public Git repository to SubVersion on WordPress.org.
 
 ## requirement
 
-- Source Git repository is public
 - Tagging revision on Git is done before deploy into WordPress.org
 - Tag name of revision on source Git repository to deploy is the same as version number of plugin’s main PHP file on tagged revision of source Git repository
 
@@ -127,7 +126,14 @@ docker-compose -f docker-compose.yml down
 
 ### ```GIT_REPOSITORY_URL```
 
-The source Git repository URL.
+The source Git repository URL for public repository.
+Only either of ```GIT_REPOSITORY_URL``` or ```GIT_PATH_CHECKED_OUT``` can define.
+
+### ```GIT_PATH_CHECKED_OUT```
+
+The source GIT_PATH_CHECKED_OUT.
+This is intended to mount the directory where checked out the private repository.
+Only either of ```GIT_REPOSITORY_URL``` or ```GIT_PATH_CHECKED_OUT``` can define.
 
 ### ```SVN_REPOSITORY_URL```
 

@@ -4,9 +4,22 @@ from pathlib import Path
 
 import ansible_runner
 import pytest
-import testinfra
 
 from tests.testlibraries.workspace import Workspace
+
+
+@pytest.fixture
+def git_repository_url():
+    os.environ['GIT_REPOSITORY_URL'] = 'https://github.com/yukihiko-shinoda/staticpress.git'
+    yield
+    del os.environ['GIT_REPOSITORY_URL']
+
+
+@pytest.fixture
+def git_path_checked_out():
+    os.environ['GIT_PATH_CHECKED_OUT'] = '/path/to/workspace'
+    yield
+    del os.environ['GIT_PATH_CHECKED_OUT']
 
 
 @pytest.fixture
@@ -26,15 +39,6 @@ def clear_artifacts():
 
 
 @pytest.fixture
-def git_svn_checkout_rsync_filter_staged_workspace(git_svn_checkout_workspace):
-    git_svn_checkout_workspace.stage_file(
-        Path(__file__).parent / 'testresources/.rsync-filter', '/root/workdir/git-working-dir/'
-    )
-    yield git_svn_checkout_workspace
-    git_svn_checkout_workspace.remove_file('/root/workdir/git-working-dir/')
-
-
-@pytest.fixture
 def git_svn_checkout_workspace(subversion_dump, workspace):
     workspace.checkout_git('0.4.8')
     workspace.checkout_svn('HEAD')
@@ -44,15 +48,8 @@ def git_svn_checkout_workspace(subversion_dump, workspace):
 
 
 @pytest.fixture
-def file_staged_workspace(workspace, src, dest):
-    workspace.stage_file(Path(__file__).parent / 'testresources' / src, dest)
-    yield workspace
-    workspace.remove_file(dest)
-
-
-@pytest.fixture
 def workspace():
-    yield Workspace(testinfra.get_host('ansible://all', ansible_inventory='/runner/inventory'))
+    yield Workspace()
 
 
 @pytest.fixture
@@ -92,23 +89,43 @@ def role_tear_down_fixture():
     yield from role('tear_down_fixture')
 
 
+@pytest.fixture
+def fixture_file(src, dest):
+    yield from fixture_file_process(src, dest)
+
+
+@pytest.fixture
+def fixture_directory(src, dest):
+    yield from fixture_directory_process(src, dest)
+
+
 def playbook(playbook):
-    dest_playbook = path_ansible_home() / playbook
-    shutil.copy(path_ansible_test_resource() / playbook, dest_playbook)
-    yield
-    os.remove(dest_playbook)
+    yield from fixture_file_process(
+        Path('project') / playbook, path_ansible_home() / playbook
+    )
 
 
 def role(role):
-    dest_role = path_ansible_home() / 'roles' / role
-    shutil.copytree(path_ansible_test_resource() / 'roles' / role, dest_role)
-    yield
-    shutil.rmtree(dest_role)
+    yield from fixture_directory_process(
+        Path('project/roles') / role, path_ansible_home() / 'roles' / role
+    )
+
+
+def fixture_file_process(src, dest):
+    shutil.copy(path_test_resource() / src, dest)
+    yield dest
+    os.remove(dest)
+
+
+def fixture_directory_process(src, dest):
+    shutil.copytree(path_test_resource() / src, dest)
+    yield dest
+    shutil.rmtree(dest)
 
 
 def path_ansible_home():
     return Path('/runner/project')
 
 
-def path_ansible_test_resource():
-    return Path(__file__).parent / 'testresources/project'
+def path_test_resource():
+    return Path(__file__).parent / 'testresources'

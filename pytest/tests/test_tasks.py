@@ -12,7 +12,7 @@ class TestTasks:
         ['plugin-main-example-3.php', '/tmp/plugin-main-example-3.php', r'[ \t\/*#@]*Version:.*$', True, '1.10.4'],
     ])
     def test_grep_plugin_data(
-        self, clear_artifacts, playbook_tasks, file_staged_workspace, regex, arrow_no_lines, expect
+        self, git_repository_url, clear_artifacts, playbook_tasks, fixture_file, regex, arrow_no_lines, expect
     ):
         # @see https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/#example-readme
         # @see https://developer.wordpress.org/plugins/plugin-basics/header-requirements/#header-fields
@@ -20,7 +20,7 @@ class TestTasks:
             'roles/checkout/tasks/grep_plugin_data.yml', 
             list_debug_variable=['result_grep'],
             vars={
-                'path_to_file': file_staged_workspace.staged_file,
+                'path_to_file': fixture_file,
                 'regex': regex,
                 'arrow_no_lines': arrow_no_lines,
             }

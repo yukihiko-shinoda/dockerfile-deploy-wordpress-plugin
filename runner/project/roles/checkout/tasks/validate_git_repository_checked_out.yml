@@ -1,0 +1,14 @@
+---
+- name: Check if GitHub workspace is defined and repository is checked out
+  stat:
+    path: '{{ git_path_checked_out }}/.git'
+  register: checked_out_repository
+
+- name: Ensure that Repository checked out
+  fail:
+    msg: Git repository hasn't checked out. Use checkout action at first.
+  when: not checked_out_repository.stat.isdir
+
+- name: Define path Git checkout
+  set_fact:
+    path_checkout_git: '{{ git_path_checked_out }}'

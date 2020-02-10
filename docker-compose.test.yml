@@ -7,7 +7,6 @@ services:
     depends_on:
       - svn
     environment:
-      GIT_REPOSITORY_URL: https://github.com/yukihiko-shinoda/staticpress.git
       SVN_REPOSITORY_URL: svn://svn/project-in-svn
       SVN_USER_NAME: svn_user_name
       SVN_USER_PASSWORD: p@ssW0rd
