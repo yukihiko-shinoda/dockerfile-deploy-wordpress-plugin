@@ -1,4 +1,4 @@
-FROM futureys/ansible-runner-python3:20191127153000 as production
+FROM futureys/ansible-runner-python3:20200416203000 as production
 RUN yum -y install  https://centos7.iuscommunity.org/ius-release.rpm && \
     yum install -y git2u subversion && yum clean all
 COPY runner /runner

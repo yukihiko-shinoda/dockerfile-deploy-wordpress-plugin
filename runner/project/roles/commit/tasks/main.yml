@@ -1,4 +1,9 @@
 ---
+- name: Ensure that tags directory exists
+  file:
+    path: '{{ workspace }}{{ directory_name_checkout_subversion }}/tags'
+    state: directory
+
 - name: SVN add
   include_tasks: list_up_files.yml
   vars:

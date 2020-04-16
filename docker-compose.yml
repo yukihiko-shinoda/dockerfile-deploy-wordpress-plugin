@@ -10,4 +10,5 @@ services:
       SVN_USER_NAME: ${SVN_USER_NAME}
       SVN_USER_PASSWORD: ${SVN_USER_PASSWORD}
       DEPLOY_VERSION: ${DEPLOY_VERSION}
+      SHOW_ALL_LOG: ${SHOW_ALL_LOG}
     image: futureys/deploy-wordpress-plugin
