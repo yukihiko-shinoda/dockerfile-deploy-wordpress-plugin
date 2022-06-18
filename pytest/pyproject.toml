@@ -38,6 +38,13 @@ min-public-methods = "1"
 [tool.mypy]
 strict = true
 
+[[tool.mypy.overrides]]
+module = [
+    "ansible_runner",
+    "testinfra"
+]
+ignore_missing_imports = true
+
 [tool.pydocstyle]
 # To add Google convention
 # see:

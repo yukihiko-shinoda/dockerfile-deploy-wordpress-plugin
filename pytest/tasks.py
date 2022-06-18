@@ -9,7 +9,6 @@ Execute 'invoke --list' for guidance on using Invoke
 from pathlib import Path
 import platform
 import shutil
-import webbrowser
 
 from invoke.runners import Failure, Result
 from invoke import task
@@ -108,7 +107,6 @@ def lint_mypy(context):
 @task
 def lint_bandit(context):
     """Lints code with bandit."""
-    space = " "
     context.run(f"bandit --recursive {TASKS_PY}", pty=True)
     context.run(f"bandit --recursive --skip B101 {TEST_DIR}", pty=True)
 
