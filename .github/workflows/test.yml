@@ -24,4 +24,5 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/deploy-wordpress-plugin:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/deploy-wordpress-plugin:buildcache,mode=max
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-wordpress-plugin:test
+      - uses: actions/checkout@v3
       - run: docker-compose -f docker-compose.test.yml run --rm sut
