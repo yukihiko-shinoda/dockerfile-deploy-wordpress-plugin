@@ -10,19 +10,30 @@ ansible = "*"
 ansible-runner = "*"
 
 [dev-packages]
+autoflake = "*"
+bandit = "*"
+black = "*"
+cohesion = "*"
+# Hotfix for Pipenv's Bug @see https://github.com/pypa/pipenv/issues/4101
+colorama = "*"
+dlint = "*"
+docformatter = "*"
+dodgy = "*"
 flake8 = "*"
+# To use flake8 --radon-show-closures
+flake8-polyfill = "*"
+hacking = "*"
+invoke = "*"
+isort = "*"
 mypy = "*"
+pydocstyle = "*"
 pylint = "*"
 pytest = "*"
-pytest-cov = "*"
 radon = "*"
-twine = "*"
-rope = "*"
 testinfra = "*"
+xenon = "*"
 
 [scripts]
-# &&: @see https://github.com/pypa/pipenv/issues/2160#issue-321228936
-test = "bash -c 'cd tests && pytest -s'"
 flake8 = "flake8 --max-line-length=120 --statistics --show-source --radon-show-closures ."
 cc = "radon cc --show-complexity --min B ."
 mi = "radon mi --show ."

@@ -18,4 +18,4 @@ ENV PIPENV_VENV_IN_PROJECT=1
 RUN pip --no-cache-dir install pipenv
 COPY pytest/Pipfile pytest/Pipfile.lock /root/pytest/
 RUN pipenv install --dev --deploy
-CMD ["pipenv", "run", "test"]
+CMD ["pipenv", "run", "invoke", "test"]
