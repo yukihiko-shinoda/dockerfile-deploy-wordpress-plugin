@@ -1,7 +1,7 @@
 ---
-version: '3.4'
+version: '3.8'
 services:
-  operator:
+  deploy:
     command:
       - ansible-runner
       - run
@@ -17,7 +17,6 @@ services:
       - svn-repository:/var/opt/svn
 
   svn:
-    container_name: svn
     image: garethflowers/svn-server
     ports:
       - 3690:3690

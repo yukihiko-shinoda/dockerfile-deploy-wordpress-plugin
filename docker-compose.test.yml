@@ -1,5 +1,5 @@
 ---
-version: '3.4'
+version: '3.8'
 services:
   sut:
     build:
@@ -17,7 +17,6 @@ services:
       - svn-repository:/var/opt/svn
 
   svn:
-    container_name: svn
     image: garethflowers/svn-server
     volumes:
       - svn-repository:/var/opt/svn

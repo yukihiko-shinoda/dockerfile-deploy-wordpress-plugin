@@ -81,7 +81,7 @@ By running SubVersion container for mock in local.
 Enter following command:
 
 ```shell script
-docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d && docker logs -f operator
+docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d && docker logs -f deploy
 ```
 
 ### 4. Check dry run result
@@ -105,7 +105,7 @@ docker-compose -f docker-compose.yml -f docker-compose.staging.yml down
 ### 6. Run as production
 
 ```shell script
-docker-compose -f docker-compose.yml up --abort-on-container-exit
+docker-compose -f docker-compose.yml up
 ```
 
 ### 7. Check on WordPress.org
