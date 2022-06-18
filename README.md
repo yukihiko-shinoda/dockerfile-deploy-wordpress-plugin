@@ -1,7 +1,8 @@
 <!-- markdownlint-disable first-line-h1 -->
+[![Test](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/actions/workflows/test.yml)
 [![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/builds)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/builds)
-[![image size and number of layers](https://images.microbadger.com/badges/image/futureys/deploy-wordpress-plugin.svg)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/dockerfile)
+[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/futureys/deploy-wordpress-plugin)](https://hub.docker.com/r/futureys/deploy-wordpress-plugin/dockerfile)
 
 # Quick reference
 
