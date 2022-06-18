@@ -1,6 +1,7 @@
-FROM futureys/ansible-runner-python3:20200416203000 as production
-RUN yum -y install  https://centos7.iuscommunity.org/ius-release.rpm && \
-    yum install -y git2u subversion && yum clean all
+FROM quay.io/ansible/ansible-runner:stable-2.12-latest as production
+# git (This image already be installed 2.31.1): Since this GitHub Action checks out WordPress plugin from GitHub.
+# subversion                                  : Since this GitHub Action commit WordPress plugin into SVN in WordPress.org.
+RUN dnf install -y subversion && dnf clean all
 COPY runner /runner
 ENV RUNNER_PLAYBOOK=playbook.yml \
     ANSIBLE_FORCE_COLOR='True'
@@ -12,9 +13,9 @@ RUN mkdir --parents --mode=755 /var/opt/svn
 
 FROM production as test
 WORKDIR /root/pytest
+# see: https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
+ENV PIPENV_VENV_IN_PROJECT=1
+RUN pip --no-cache-dir install pipenv
 COPY pytest/Pipfile pytest/Pipfile.lock /root/pytest/
-# @see https://github.com/pypa/pipenv/issues/451#issuecomment-366155882
-ENV PIP_NO_CACHE_DIR false
-# @see https://pipenv-fork.readthedocs.io/en/latest/advanced.html#using-pipenv-for-deployments
-RUN python3 -m pipenv install --dev --deploy
-CMD ["pipenv", "run", "test"]
+RUN pipenv install --dev --deploy
+CMD ["pipenv", "run", "invoke", "test"]

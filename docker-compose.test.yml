@@ -1,5 +1,5 @@
 ---
-version: '3.4'
+version: '3.8'
 services:
   sut:
     build:
@@ -10,12 +10,13 @@ services:
       SVN_REPOSITORY_URL: svn://svn/project-in-svn
       SVN_USER_NAME: svn_user_name
       SVN_USER_PASSWORD: p@ssW0rd
+    image: futureys/deploy-wordpress-plugin:test
     volumes:
       - ./pytest:/root/pytest
+      - /root/pytest/.venv
       - svn-repository:/var/opt/svn
 
   svn:
-    container_name: svn
     image: garethflowers/svn-server
     volumes:
       - svn-repository:/var/opt/svn
