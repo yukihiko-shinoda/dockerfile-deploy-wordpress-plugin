@@ -59,7 +59,7 @@ if you look at the Docker Compose files in the GitHub code.
 
 <https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin>
 
-## ... via docker-compose
+## ... via docker compose
 
 ### 1. Download project files
 
@@ -82,7 +82,7 @@ By running SubVersion container for mock in local.
 Enter following command:
 
 ```shell script
-docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d && docker logs -f deploy
+dockercompose -f docker-compose.yml -f docker-compose.staging.yml up -d && docker logs -f deploy
 ```
 
 ### 4. Check dry run result
@@ -100,13 +100,13 @@ svn log HEAD:1
 Once you have checked that it works as expected, shutdown containers once.
 
 ```shell script
-docker-compose -f docker-compose.yml -f docker-compose.staging.yml down
+docker compose -f docker-compose.yml -f docker-compose.staging.yml down
 ```
 
 ### 6. Run as production
 
 ```shell script
-docker-compose -f docker-compose.yml up
+docker compose -f docker-compose.yml up
 ```
 
 ### 7. Check on WordPress.org
@@ -120,7 +120,7 @@ Check on WordPress.org that it has been deployed successfully.
 After checking that the deployment was succeed, shutdown the container.
 
 ```shell script
-docker-compose -f docker-compose.yml down
+docker compose -f docker-compose.yml down
 ```
 
 ## Environment Variables
