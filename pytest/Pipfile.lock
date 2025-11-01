@@ -24,11 +24,12 @@
         },
         "ansible-core": {
             "hashes": [
-                "sha256:e7f50bbb61beae792f5ecb86eff82149d3948d078361d70aedb01d76bc483c30",
-                "sha256:f542e702ee31fb049732143aeee6b36311ca48b7d13960a0685afffa0d742d7f"
+                "sha256:731fdd4d1bd8a20cebd7c919006582983a2397df5dea7b24056e08acf5c14ab3",
+                "sha256:9957e880fdb2685aece141d50f21d62acabd6a984fa75948fb32a9d2b50d4eed"
             ],
-            "markers": "python_version >= '3.9'",
-            "version": "==2.15.13"
+            "index": "pypi",
+            "markers": "python_version >= '3.10'",
+            "version": "==2.16.14rc1"
         },
         "ansible-runner": {
             "hashes": [
@@ -125,7 +126,7 @@
                 "sha256:fc7de24befaeae77ba923797c7c87834c73648a05a4bde34b3b7e5588973a453",
                 "sha256:fe562eb1a64e67dd297ccc4f5addea2501664954f2692b69a76449ec7913ecbf"
             ],
-            "markers": "python_full_version >= '3.9' and platform_python_implementation != 'PyPy'",
+            "markers": "python_version >= '3.9'",
             "version": "==2.0.0"
         },
         "cryptography": {
@@ -341,7 +342,7 @@
                 "sha256:78816d4f24add8f10a06d6f05b4d424ad9e96cfebf68a4ddc99c65c0720d00c2",
                 "sha256:e5c6e8d3fbad53479cab09ac03729e0a9faf2bee3db8208a550daf5af81a5934"
             ],
-            "markers": "implementation_name != 'PyPy'",
+            "markers": "python_version >= '3.8'",
             "version": "==2.23"
         },
         "python-daemon": {
