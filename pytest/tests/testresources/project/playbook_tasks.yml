@@ -4,4 +4,4 @@
     - include_tasks: '{{ task_file_name }}'
     - debug:
         var: '{{ item }}'
-      with_items: '{{ list_debug_variable }}'
+      loop: '{{ list_debug_variable }}'

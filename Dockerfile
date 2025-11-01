@@ -25,7 +25,7 @@ FROM production AS test
 WORKDIR /root/pytest
 # see: https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
 ENV PIPENV_VENV_IN_PROJECT=1
-RUN pip --no-cache-dir install pipenv==2022.8.30
+RUN pip --no-cache-dir install pipenv==2022.8.19
 COPY pytest/Pipfile pytest/Pipfile.lock /root/pytest/
 RUN pipenv install --dev --deploy
 CMD ["pipenv", "run", "invoke", "test"]
