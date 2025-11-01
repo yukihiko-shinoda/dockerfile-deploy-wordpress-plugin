@@ -7,6 +7,8 @@ RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
     dnf install -y \
     # Since this GitHub Action commit WordPress plugin into SVN in WordPress.org.
     subversion-1.10.2 \
+    # Since Ansible 7.0.0 doesn't support python3.8 that is default python version in this image.
+    python39-3.9.19 \
     # git (This image already be installed 2.31.1): Since this GitHub Action checks out WordPress plugin from GitHub.
  && dnf clean all
 COPY runner /runner
