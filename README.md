@@ -42,7 +42,7 @@ The process executes rsync from Git working tree to SubVersion working tree with
 
 ### default behavior
 
-rsync will read [default .rsync-filter file](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/blob/master/runner/project/roles/deploy-wordpress-plugin/templates/.rsync-filter.j2).
+rsync will read [default .rsync-filter file](https://github.com/yukihiko-shinoda/dockerfile-deploy-wordpress-plugin/blob/main/runner/project/roles/deploy-wordpress-plugin/templates/.rsync-filter.j2).
 
 ### customizing behavior
 
